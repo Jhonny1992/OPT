@@ -1,0 +1,27 @@
+<div class="otp-container">
+  <div class="otp-input d-flex">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+    <input type="text" maxlength="1" class="input" placeholder=" ">
+  </div>
+</div>
+
+<div class="otp-contenedor">
+    <input type="text" maxlength="1"  #myInput #text1 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+    <input type="text" maxlength="1"  #myInput #text2 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+    <input type="text" maxlength="1"  #myInput #text3 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+    <input type="text" maxlength="1"  #myInput #text4 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+    <input type="text" maxlength="1"  #myInput #text5 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+    <input type="text" maxlength="1"  #myInput #text6 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+<div *ngIf="viewButton == true ? viewButton : hideButton">
+  <button class="buttonCodigo" *ngIf="viewButton"  [disabled]="isSaw" style="font-size:50px" (click)="visualizarCodigo()"><fa-icon [icon]="faeye"></fa-icon></button>
+  <button class="buttonCodigo" *ngIf="hideButton" [disabled]="isSaw" style="font-size:50px" (click)="ocultarCodigo()"><fa-icon [icon]="faeyeslash"></fa-icon></button>
+</div>
+</div>
+
+
+<app-teclado-virtual #inputsito (tecla)="presionarTecla($event)"></app-teclado-virtual>
+
