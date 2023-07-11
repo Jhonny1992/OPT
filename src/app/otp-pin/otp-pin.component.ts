@@ -9,14 +9,11 @@ import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 export class OtpPinComponent implements OnInit {
 
   @ViewChildren('myInput') myInputs: QueryList<ElementRef>;
+  @ViewChildren('myInputTow') myInputTowList: QueryList<ElementRef>;
   faeye = faEye
   faeyeslash = faEyeSlash
 
   pass: string = '';
-  isTeclado: boolean =false;
-  @Output() isOpen: EventEmitter<any>  = new EventEmitter<any>()
-  @Output() position: EventEmitter<any>  = new EventEmitter<any>()
-  @ViewChild("input") input: ElementRef
 
   @ViewChild("text1") text1: ElementRef;
   @ViewChild("text2") text2: ElementRef;
@@ -24,225 +21,368 @@ export class OtpPinComponent implements OnInit {
   @ViewChild("text4") text4: ElementRef;
   @ViewChild("text5") text5: ElementRef;
   @ViewChild("text6") text6: ElementRef;
-  obteniendo : any
 
-  @ViewChild("inputsito") keyboard: KeyboardEvent
+  @ViewChild("text7") text7: ElementRef;
+  @ViewChild("text8") text8: ElementRef;
+  @ViewChild("text9") text9: ElementRef;
+  @ViewChild("text10") text10: ElementRef;
+  @ViewChild("text11") text11: ElementRef;
+  @ViewChild("text12") text12: ElementRef;
 
-  mirar:string="VER"
-  ocultar:string = "ocultar"
+  @ViewChild("inputFirst") keyboard: KeyboardEvent
+
   viewButton: boolean = true;
   hideButton: boolean = false;
-  positiones: any
-  increment:number =0
+
+  viewButtonTwo: boolean = true;
+  hideButtonTwo: boolean = false;
+  indexInput: any
+  increment:number = 0
   maxLenght:any
-  arraysall:any =[]
+  arrayData:any =[]
   isSaw: boolean = true;
-ver: boolean = true;
-textito:string=''
+  isSawTwo: boolean = true;
   valor:string=''
+  arrayDataTwo: any =[]
+
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
-    for(let asa of this.arraysall){
-      this.pass += asa;
+  result() {
+    for(let element of this.arrayData){
+      this.pass += element;
     }
     alert("aqui está el array: " + this.pass)
     this.pass=''
-    /*this.myInputs.forEach(elemento => {
-      this.pass +=elemento.nativeElement.value
-    });
-
-    this.pass=''*/
   }
-  visualizarCodigo(){
-    let i=0;
-    if(this.ver){
-
-    }
-    for(let holita of this.myInputs){
-      if(this.arraysall[i]){
-        holita.nativeElement.value = this.arraysall[i];
-        holita.nativeElement.style = [];
+  visualizarCodigo(codigo: number){
+    let buttonTeclado=0;
+    if(codigo == 1){
+      for(let myInput of this.myInputs){
+        if(this.arrayData[buttonTeclado]){
+          myInput.nativeElement.value = this.arrayData[buttonTeclado];
+          myInput.nativeElement.style =[]
+        }
+        buttonTeclado++
       }
-        i++
-    }
-    this.viewButton= false;
-    this.hideButton = true
-  }
-  ocultarCodigo(){
-    let i=0;
-    for(let holita of this.myInputs){
-      if(this.arraysall[i]){
-        holita.nativeElement.value = this.arraysall[i].replace(this.arraysall[i],"•");;
-        this.styleCod(holita.nativeElement.style)
+      this.viewButton= false;
+      this.hideButton = true
+    }else if(codigo == 2){
+      for(let myInput of this.myInputTowList){
+        if(this.arrayDataTwo[buttonTeclado]){
+          myInput.nativeElement.value = this.arrayDataTwo[buttonTeclado];
+          myInput.nativeElement.style =[]
+        }
+        buttonTeclado++
       }
-      i++
+      this.viewButtonTwo= false;
+      this.hideButtonTwo = true
     }
-    this.viewButton= true;
-    this.hideButton = false;
+
+
+  }
+  ocultarCodigo(codigo: number){
+    let buttonTeclado=0;
+    if(codigo ==3){
+      for(let myInput of this.myInputs){
+        if(this.arrayData[buttonTeclado]){
+          myInput.nativeElement.value = this.arrayData[buttonTeclado].replace(this.arrayData[buttonTeclado],"•");;
+          this.styleCod(myInput.nativeElement.style)
+        }
+        buttonTeclado++
+      }
+      this.viewButton= true;
+      this.hideButton = false;
+    }else if(codigo==4){
+      for(let myInput of this.myInputTowList){
+        if(this.arrayDataTwo[buttonTeclado]){
+          myInput.nativeElement.value = this.arrayDataTwo[buttonTeclado].replace(this.arrayDataTwo[buttonTeclado],"•");;
+          this.styleCod(myInput.nativeElement.style)
+        }
+        buttonTeclado++
+      }
+      this.viewButtonTwo= true;
+      this.hideButtonTwo = false;
+    }
   }
 
+  presionarTecla(buttonTeclado:any){
+    if(isNaN(buttonTeclado) || this.arrayData.length ===6){
+      if (this.arrayData.length === 6 && buttonTeclado != 'borrar'  && buttonTeclado != 'borrarTodo' && buttonTeclado != 'continuar' && buttonTeclado !='cancelar') {
+        if(this.indexInput==undefined){
+          this.indexInput =this.myInputTowList.get(0).nativeElement;
+          this.isSawTwo=false
+        }
+        this.inputLineTwo(this.hideButtonTwo, this.viewButtonTwo, buttonTeclado)
+      }
+      else if(buttonTeclado == 'borrar'){
+        console.log(this.indexInput)
+        if(this.indexInput == undefined && this.arrayData.length !==0){
+          const nextelement = this.myInputs.get(5).nativeElement
+          this.indexInput = nextelement.nextElementSibling
+        }
 
-  mostrar(key:any){
-    console.log(key.target)
-    this.positiones = key.target
-    this.positiones.focus();
-    this.viewButton = true;
-    this.hideButton = false;
-  }
-
-  presionarTecla(i:any){
-    if(isNaN(i)){
-      if(i == 'borrar'){
-        console.log(this.positiones)
-        if(this.positiones != undefined){
-          let previus = this.positiones.previousElementSibling
-          if(previus!=null){
-            previus.style=[]
-            this.arraysall.pop()
-            if(this.arraysall==""|| this.arraysall==null){
-              this.isSaw=true
+        if(this.arrayDataTwo.length ==0){
+          if(this.indexInput != undefined){
+            let previus = this.indexInput.previousElementSibling
+            while (previus && previus.tagName !== 'INPUT') {
+              previus = previus.previousElementSibling;
             }
-            //this.arraysall="" ? this.isSaw=false : this.isSaw=true
-            previus.value = '';
-            previus.focus();
-            this.positiones = previus
+            if(previus!=null){
+              previus.style=[]
+              this.arrayData.pop()
+              if(this.arrayData==""|| this.arrayData==null){
+                this.isSaw=true
+              }
+              //this.arraysall="" ? this.isSaw=false : this.isSaw=true
+              previus.value = '';
+              previus.focus();
+              this.indexInput = previus
 
+            }
+          }
+        }else if(this.arrayData.length){
+          if(this.indexInput != undefined){
+            let previus = this.indexInput.previousElementSibling
+            if(previus!=null){
+              previus.style=[]
+              this.arrayDataTwo.pop()
+              if(this.arrayDataTwo==""|| this.arrayDataTwo==null){
+                this.isSawTwo=true
+              }
+              //this.arraysall="" ? this.isSaw=false : this.isSaw=true
+              previus.value = '';
+              previus.focus();
+              this.indexInput = previus
+            }
+            if(!this.arrayDataTwo.length || this.arrayDataTwo.length==0 ){
+              this.indexInput = undefined
+            }
           }
         }
 
 
-
-
-
-      }else if(i =='borrarTodo' && this.arraysall!=''){
-        console.log(i)
-        console.log(this.myInputs)
-        console.log(this.arraysall)
-        for(let hola of this.myInputs){
-          hola.nativeElement.style=[]
-          hola.nativeElement.value ='';
-          this.positiones=undefined
-          this.arraysall = []
+      }else if(buttonTeclado =='borrarTodo' && this.arrayData!=''){
+        for(let myInput of this.myInputs){
+          myInput.nativeElement.style=[]
+          myInput.nativeElement.value ='';
+          this.indexInput=undefined
+          this.arrayData = []
           this.isSaw=true
           this.viewButton= true;
           this.hideButton = false
         }
-      }else if(i =='continuar'){
-        if(this.arraysall.length<6){
+        for(let myInput of this.myInputTowList){
+          myInput.nativeElement.style=[]
+          myInput.nativeElement.value ='';
+          this.indexInput=undefined
+          this.arrayDataTwo = []
+          this.isSawTwo=true
+          this.viewButtonTwo= true;
+          this.hideButtonTwo = false
+        }
+      }else if(buttonTeclado =='continuar'){
+        if(this.arrayData.length<6){
           alert("falta");
         }else{
-          this.ngAfterViewInit()
+          this.result()
 
         }
 
       }
 
     }else{
-        if(this.positiones==undefined){
-          this.positiones =this.myInputs.get(0).nativeElement
+        if(this.indexInput==undefined){
+          this.indexInput =this.myInputs.get(0).nativeElement;
           this.isSaw=false;
         }
-        if(this.hideButton == false){
-          if(this.positiones == this.myInputs.get(0).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text1.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text1.nativeElement.style);
-            this.move(this.keyboard,"",this.positiones,this.positiones.nextElementSibling)
-            this.isSaw=false
-
-          }else if(this.positiones == this.myInputs.get(1).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text2.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text2.nativeElement.style);
-            this.move(this.keyboard,this.text1.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(2).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text3.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text3.nativeElement.style);
-            this.move(this.keyboard,this.text2.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(3).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text4.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text4.nativeElement.style);
-            this.move(this.keyboard,this.text3.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(4).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text5.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text5.nativeElement.style);
-            this.move(this.keyboard,this.text4.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(5).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text6.nativeElement.value = i.toString().replace(i.toString(),"•");
-            this.styleCod(this.text6.nativeElement.style);
-            this.move(this.keyboard,this.text5.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-
-        }else if(this.viewButton == false){
-          if(this.positiones == this.myInputs.get(0).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text1.nativeElement.value = i.toString()
-            this.text1.nativeElement.style = [];
-            this.move(this.keyboard,"",this.positiones,this.positiones.nextElementSibling)
-            this.isSaw=false
-
-          }else if(this.positiones == this.myInputs.get(1).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text2.nativeElement.value = i.toString()
-            this.text2.nativeElement.style = [];
-            this.move(this.keyboard,this.text1.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(2).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text3.nativeElement.value = i.toString()
-            this.text3.nativeElement.style = [];
-            this.move(this.keyboard,this.text2.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(3).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text4.nativeElement.value = i.toString()
-            this.text4.nativeElement.style = [];
-            this.move(this.keyboard,this.text3.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(4).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text5.nativeElement.value = i.toString()
-            this.text5.nativeElement.style = [];
-            this.move(this.keyboard,this.text4.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-          else if(this.positiones == this.myInputs.get(5).nativeElement){
-            this.arraysall.push(i.toString());
-            this.text6.nativeElement.value = i.toString()
-            this.text6.nativeElement.style = [];
-            this.move(this.keyboard,this.text5.nativeElement,this.positiones,this.positiones.nextElementSibling)
-
-          }
-        }
-
+        this.inputLineOne(this.hideButton,this.viewButton, buttonTeclado);
     }
   }
 
-  styleCod(e:any){
+  inputLineOne(hideButton: boolean, viewButton: boolean, buttonTeclado: any){
+    if(hideButton == false && viewButton==true){
+      if(this.indexInput == this.myInputs.get(0).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text1.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text1.nativeElement.style);
+        this.move(this.keyboard,"",this.indexInput,this.indexInput.nextElementSibling)
+        this.isSaw=false
 
+      }else if(this.indexInput == this.myInputs.get(1).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text2.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text2.nativeElement.style);
+        this.move(this.keyboard,this.text1.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(2).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text3.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text3.nativeElement.style);
+        this.move(this.keyboard,this.text2.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(3).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text4.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text4.nativeElement.style);
+        this.move(this.keyboard,this.text3.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(4).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text5.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text5.nativeElement.style);
+        this.move(this.keyboard,this.text4.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputs.get(5).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text6.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text6.nativeElement.style);
+        this.move(this.keyboard,this.text5.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+        this.indexInput = undefined
+
+      }
+
+    }
+    else if(viewButton == false && hideButton == true){
+      if(this.indexInput == this.myInputs.get(0).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text1.nativeElement.value = buttonTeclado.toString()
+        this.text1.nativeElement.style = [];
+        this.move(this.keyboard,"",this.indexInput,this.indexInput.nextElementSibling)
+        this.isSaw=false
+
+      }else if(this.indexInput == this.myInputs.get(1).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text2.nativeElement.value = buttonTeclado.toString()
+        this.text2.nativeElement.style = [];
+        this.move(this.keyboard,this.text1.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(2).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text3.nativeElement.value = buttonTeclado.toString()
+        this.text3.nativeElement.style = [];
+        this.move(this.keyboard,this.text2.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(3).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text4.nativeElement.value = buttonTeclado.toString()
+        this.text4.nativeElement.style = [];
+        this.move(this.keyboard,this.text3.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(4).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text5.nativeElement.value = buttonTeclado.toString()
+        this.text5.nativeElement.style = [];
+        this.move(this.keyboard,this.text4.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+
+      }
+      else if(this.indexInput == this.myInputs.get(5).nativeElement){
+        this.arrayData.push(buttonTeclado.toString());
+        this.text6.nativeElement.value = buttonTeclado.toString()
+        this.text6.nativeElement.style = [];
+        this.move(this.keyboard,this.text5.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+        this.indexInput = undefined
+
+      }
+    }
+  }
+
+  inputLineTwo(hideButtonTwo: boolean, viewButtonTwo: boolean, buttonTeclado: any){
+    if(hideButtonTwo == false && viewButtonTwo==true){
+      if(this.indexInput ==this.myInputTowList.get(0).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text7.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text7.nativeElement.style);
+        this.move(this.keyboard,"",this.indexInput,this.indexInput.nextElementSibling)
+
+
+      }else if(this.indexInput == this.myInputTowList.get(1).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text8.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text8.nativeElement.style);
+        this.move(this.keyboard,this.text7.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(2).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text9.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text9.nativeElement.style);
+        this.move(this.keyboard,this.text8.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(3).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text10.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text10.nativeElement.style);
+        this.move(this.keyboard,this.text9.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(4).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text11.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text11.nativeElement.style);
+        this.move(this.keyboard,this.text10.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(5).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text12.nativeElement.value = buttonTeclado.toString().replace(buttonTeclado.toString(),"•");
+        this.styleCod(this.text12.nativeElement.style);
+        this.move(this.keyboard,this.text11.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+    }else if(viewButtonTwo == false && hideButtonTwo == true){
+      if(this.indexInput ==this.myInputTowList.get(0).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text7.nativeElement.value = buttonTeclado.toString()
+        this.text7.nativeElement.style = [];
+        this.move(this.keyboard,"",this.indexInput,this.indexInput.nextElementSibling)
+        this.isSawTwo=false
+
+
+      }else if(this.indexInput == this.myInputTowList.get(1).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text8.nativeElement.value = buttonTeclado.toString()
+        this.text8.nativeElement.style = [];
+        this.move(this.keyboard,this.text7.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(2).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text9.nativeElement.value = buttonTeclado.toString();
+        this.text8.nativeElement.style = [];
+        this.move(this.keyboard,this.text8.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(3).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text10.nativeElement.value = buttonTeclado.toString()
+        this.text8.nativeElement.style = [];
+        this.move(this.keyboard,this.text9.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(4).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text11.nativeElement.value = buttonTeclado.toString()
+        this.text8.nativeElement.style = [];
+        this.move(this.keyboard,this.text10.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+      else if(this.indexInput == this.myInputTowList.get(5).nativeElement){
+        this.arrayDataTwo.push(buttonTeclado.toString());
+        this.text12.nativeElement.value = buttonTeclado.toString()
+        this.text8.nativeElement.style = [];
+        this.move(this.keyboard,this.text11.nativeElement,this.indexInput,this.indexInput.nextElementSibling)
+      }
+    }
+
+
+  }
+
+  styleCod(e:any){
   e.fontSize='65px';
-    e.color= '#08385E'
+    e.color= '#08385E';
+    e.height='66px'
 }
 
   move(e:any,p:any,c:any,n:any){
@@ -252,7 +392,7 @@ textito:string=''
 
     if(length==this.maxLenght){
       if(n != ""){
-        this.positiones = n
+        this.indexInput = n
         n.focus();
       }
     }
@@ -260,9 +400,6 @@ textito:string=''
       if(p!=''){
         p.focus();
       }
-
     }
-
-
   }
 }

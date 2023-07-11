@@ -1,4 +1,14 @@
-<p id="mi-parrafo">Ejemplo de texto</p>
-<p [innerHTML]="reemplazarTexto() " [ngStyle]="estilosParrafo"></p>
-
-<button (click) = "clickea()">ACEPOTAR</button>
+<div class="otp-container">
+  <div class="otp-input-group">
+    <ng-container *ngFor="let char of placeholderChars">
+      <div class="otp-char">{{ char }}</div>
+    </ng-container>
+  </div>
+  <input
+    type="text"
+    [(ngModel)]="otp"
+    (input)="onInputChange()"
+    maxlength="6"
+    class="otp-hidden-input"
+  />
+</div>

@@ -11,6 +11,8 @@ export class TecladoVirtualComponent implements OnInit {
   @Input() numerico: boolean;
   @Input() includesPoint: boolean = false;
 
+  blocked = ""
+
 
   fila1 = [1,2,3];
   fila2 = [4,5,6];

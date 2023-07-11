@@ -3,33 +3,22 @@
     <div class="row">
       <div class="tecla-normal tecla center" *ngFor="let l of fila1;" (click)="presionarTecla(l)"><h3>{{l}}</h3></div>
       <div class="tecla-normal tecla center tecla-borrar" (click)="presionarTecla('borrar')">
-        <img src="assets/back.png" alt="borrar" width="32px" height="32px">
+        <img src="../../assets/back.png" alt="borrar" width="32.5px" height="25px">
       </div>
     </div>
     <div class="row">
       <div class="tecla-normal tecla center" *ngFor="let l of fila2;" (click)="presionarTecla(l)"><h3>{{l}}</h3></div>
-      <div class="tecla-normal tecla center tecla-borrar" (click)="presionarTecla('borrarTodo')"><h3>Borrar todo</h3></div>
+      <div class="tecla-normal tecla center tecla-borrar" (click)="presionarTecla('borrarTodo')"><h3>BORRAR TODO</h3></div>
     </div>
     <div class="row">
       <div class="tecla-normal tecla center" *ngFor="let l of fila3;" (click)="presionarTecla(l)"><h3>{{l}}</h3></div>
-      <div class="tecla-normal tecla center" ></div>
+        <div class="tecla-normal tecla center tecla-borrar" (click)="presionarTecla('cancelar')" ><h3>CANCELAR</h3></div>
     </div>
     <div class="row">
-      <div class="tecla-normal tecla center" ></div>
+      <div class="tecla-no-border tecla center" ></div>
       <div class="tecla-normal tecla center" *ngFor="let l of fila4;" (click)="presionarTecla(l)"><h3>{{l}}</h3></div>
-      <div class="tecla-normal tecla center" ></div>
-      <div class="tecla-normal tecla center tecla-continuar bg-continuar" (click)="presionarTecla('continuar')" ><h3>Continuar</h3></div>
+      <div class="tecla-no-border tecla center" ></div>
+      <div class="tecla-normal tecla center tecla-continuar bg-continuar" (click)="presionarTecla('continuar')" ><h3>CONTINUAR</h3></div>
     </div>
-    <!--div *ngFor="let i of arrayTeclado" (click)="presionarTecla(i)"
-         class="tecla tecla-normal center"
-
-         [ngClass]="{'tecla-blocked': i == blocked, 'tecla-continuar': i == continuar,
-                      'tecla-accion': i == backpng || i == borrarTodo}"
-    >
-
-      <h3 *ngIf="i != backpng">{{(i == blocked)?"":i}}</h3>
-      <img alt="back" *ngIf="i == backpng" [src] = i width="32.5px" height="32.5px">
-    </div-->
-
   </div>
 </div>

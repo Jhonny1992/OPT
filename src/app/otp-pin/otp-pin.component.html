@@ -1,16 +1,7 @@
-<div class="otp-container">
-  <div class="otp-input d-flex">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-    <input type="text" maxlength="1" class="input" placeholder=" ">
-  </div>
-</div>
 
-<div class="otp-contenedor">
-    <input type="text" maxlength="1"  #myInput #text1 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
+
+<!--div class="otp-contenedor">
+    <input type="text" maxlength="1"  #myInput #text1 class="formatito" placeholder=" " (click)="mostrar($event)">
     <input type="text" maxlength="1"  #myInput #text2 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
     <input type="text" maxlength="1"  #myInput #text3 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
     <input type="text" maxlength="1"  #myInput #text4 class="formatito" placeholder=" " disabled (click)="mostrar($event)">
@@ -21,7 +12,44 @@
   <button class="buttonCodigo" *ngIf="hideButton" [disabled]="isSaw" style="font-size:50px" (click)="ocultarCodigo()"><fa-icon [icon]="faeyeslash"></fa-icon></button>
 </div>
 </div>
+<div class="row">
+  <label class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+  <div class="col-sm-5">
 
-
-<app-teclado-virtual #inputsito (tecla)="presionarTecla($event)"></app-teclado-virtual>
-
+  </div>
+  <div class="col-sm-2" *ngIf="viewButton == true ? viewButton : hideButton">
+  </div>
+</div-->
+<div class="text-center d-flex flex-column justify-content-center" style="height: 80vh">
+<div class=" content center  ">
+  <div class="col-2">
+  <label>Ingresa nuevo PIN:</label>
+  </div>
+  <input type="text" maxlength="1" #myInput #text1 class="formato-clase" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInput #text2 class="formato-clase" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInput #text3 class="formato-clase" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInput #text4 class="formato-clase" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInput #text5 class="formato-clase" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInput #text6 class="formato-clase" placeholder=" " disabled>
+  <div *ngIf="viewButton == true ? viewButton : hideButton">
+    <button class="buttonCodigo" *ngIf="viewButton"  [disabled]="isSaw" style="font-size:50px" (click)="visualizarCodigo(1)"><fa-icon [icon]="faeye"></fa-icon></button>
+    <button class="buttonCodigo" *ngIf="hideButton" [disabled]="isSaw" style="font-size:50px" (click)="ocultarCodigo(3)"><fa-icon [icon]="faeyeslash"></fa-icon></button>
+  </div>
+</div>
+<div class="content center  mt-5">
+  <div class="col-2">
+    <label>Confirma nuevo PIN:</label>
+  </div>
+  <input type="text" maxlength="1" #myInputTow #text7 class="formato-clase 2" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInputTow #text8 class="formato-clase 2" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInputTow #text9 class="formato-clase 2" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInputTow #text10 class="formato-clase 2" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInputTow #text11 class="formato-clase 2" placeholder=" " disabled>
+  <input type="text" maxlength="1" #myInputTow #text12 class="formato-clase 2" placeholder=" " disabled>
+  <div *ngIf="viewButtonTwo == true ? viewButtonTwo : hideButtonTwo">
+    <button class="buttonCodigo" *ngIf="viewButtonTwo"  [disabled]="isSawTwo" style="font-size:50px" (click)="visualizarCodigo(2)"><fa-icon [icon]="faeye"></fa-icon></button>
+    <button class="buttonCodigo" *ngIf="hideButtonTwo" [disabled]="isSawTwo" style="font-size:50px" (click)="ocultarCodigo(4)"><fa-icon [icon]="faeyeslash"></fa-icon></button>
+  </div>
+</div>
+<app-teclado-virtual #inputFirst (tecla)="presionarTecla($event)"></app-teclado-virtual>
+</div>
